@@ -1,0 +1,61 @@
+function! MyFunction()
+let s:Fsep = javaunit#util#Fsep()
+let s:Psep = javaunit#util#Psep()
+let g:JavaUnit_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?'. s:Fsep. '?')
+
+let s:JavaUnit_TestMethod_Source =
+            \g:JavaUnit_Home
+            \.s:Fsep
+            \.join(['src' , 'com' , 'wsdjeg' , 'util' , '*.java'],s:Fsep)
+
+if exists("g:JavaUnit_custom_tempdir")
+    let s:JavaUnit_tempdir = g:JavaUnit_custom_tempdir
+else
+    let s:JavaUnit_tempdir = g:JavaUnit_Home .s:Fsep .'bin'
+endif
+
+let s:JavaUnit_Home_lib = g:JavaUnit_Home .s:Fsep .'lib/*'
+
+let s:cmd="java -cp '"
+            \.s:JavaUnit_tempdir
+            \.s:Psep
+            \.get(g:,'JavaComplete_LibsPath','.')
+            \.s:Psep
+            \.s:JavaUnit_Home_lib
+            \."' com.wsdjeg.util.TestMethod "
+            " \.currentClassName
+            " \.' '
+            " \.a:args
+
+    " let s:cmdAll="java -cp '"
+    "             \. s:JavaUnit_tempdir.s:Psep.g:JavaComplete_LibsPath . "' com.wsdjeg.util.TestMethod " 
+
+let s:filepath = expand('%:p')
+
+let s:filetype = expand('%:e')
+
+let s:cppath = split(s:filepath, "src")[0]
+
+    
+let s:cmdAll="java -cp '"
+            \.s:JavaUnit_tempdir
+            \.s:Psep
+            \.get(g:,'JavaComplete_LibsPath','.')
+            \.s:Psep
+            \.s:JavaUnit_Home_lib
+            \."' "
+            \.' '
+            \.(len(a:000) > 0 ? join(a:000,' ') : '')
+
+
+" echom s:JavaUnit_Home
+" echom s:JavaUnit_TestMethod_Source
+echo s:filepath
+
+echo s:cppath
+
+echom s:JavaUnit_tempdir
+" echom s:cmd
+"echom s:cmdAll
+endfunction
+call MyFunction()
