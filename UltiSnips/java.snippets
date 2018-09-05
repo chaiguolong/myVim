@@ -1,0 +1,14 @@
+snippet servlet "servlet Template" b
+
+public class ${1:`!p snip.rv = snip.basename or "untitled"`} extends HttpServlet{
+	private static final long serialVersionUID = -23324535345L;
+
+	protected void doGet(HttpServletRequest request ,HttpServletResponse response) throws ServletException ,IOException{
+
+	}
+	protected void doPost(HttpServletRequest request,HttpServletResponse response)throws ServletException ,IOException{
+		doGet(request,response);
+	}
+}
+endsnippet
+
